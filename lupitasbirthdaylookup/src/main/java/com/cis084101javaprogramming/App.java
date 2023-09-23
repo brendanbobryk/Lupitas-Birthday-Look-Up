@@ -73,14 +73,40 @@ public class App {
         // Get user input
         Scanner input = new Scanner(System.in);
         System.out.print("Enter a name: ");
-        String name = input.nextLine();
+        String inputtedName = input.nextLine().toLowerCase();
 
-        // Prints user's input
-        System.out.println("Name = " + name);
+        int tempNameLength = inputtedName.length();
+        if (tempNameLength > 3) {
+            tempNameLength = 3;
+        }
 
-        // Prints the name's birthday
-        String birthday = birthdayMap.get(name);
-        System.out.println("Their birthday is: " + birthday);
+        JSONArray jsonData = readJSONArrayFile(pathToFile);
+        String name = "N/A", birthday;
+        ArrayList<String> nameArrayList = new ArrayList<String>();
+        JSONObject obj;
+        int nameCount = 0;
+        for (Integer i = 0; i < jsonData.size(); i++) {
+
+            // Parse the object and pull out the name
+            obj = (JSONObject) jsonData.get(i);
+            name = (String) obj.get("name");
+
+            if (name.toLowerCase().contains(inputtedName.substring(0, tempNameLength))) {
+                nameArrayList.add(name);
+                nameCount++;
+            }
+        }
+
+        // Loops through nameArrayList and prints the name and birthday for each person
+        // found in the search
+        for (int i = 0; i < nameCount; i++) {
+            // Prints user's input
+            System.out.println("Name = " + nameArrayList.get(i));
+
+            // Prints the name's birthday
+            birthday = birthdayMap.get(nameArrayList.get(i));
+            System.out.println("Their birthday is: " + birthday);
+        }
 
         // Close the scanner
         input.close();
