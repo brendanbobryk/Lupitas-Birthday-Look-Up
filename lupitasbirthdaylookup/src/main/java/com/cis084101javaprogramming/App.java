@@ -75,12 +75,14 @@ public class App {
         System.out.print("Enter a name: ");
         String inputtedName = input.nextLine().toLowerCase();
 
-        // ******************************************** add comments
-        // ********************************************
+        // Declarations
         JSONArray jsonData = readJSONArrayFile(pathToFile);
-        String name = "N/A", birthday;
-        ArrayList<String> nameArrayList = new ArrayList<String>();
+        String name, birthday;
         JSONObject obj;
+        // Array List to store name matches
+        ArrayList<String> nameArrayList = new ArrayList<String>();
+
+        // Loop to traverse JSON file
         int nameCount = 0;
         for (Integer i = 0; i < jsonData.size(); i++) {
 
@@ -88,6 +90,7 @@ public class App {
             obj = (JSONObject) jsonData.get(i);
             name = (String) obj.get("name");
 
+            // Checks name to see if it matches input
             if (name.toLowerCase().contains(inputtedName.substring(0, inputtedName.length()))) {
                 nameArrayList.add(name);
                 nameCount++;
