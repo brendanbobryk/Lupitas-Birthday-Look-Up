@@ -75,11 +75,15 @@ public class App {
 
         // Get user input
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter a name:");
+        System.out.print("Enter a name: ");
         String name = input.nextLine();
 
         // Prints user's input
-        System.out.println("name = " + name);
+        System.out.println("Name = " + name);
+
+        // Prints the name's birthday
+        String birthday = birthdayMap.get(name);
+        System.out.println("Their birthday is: " + birthday);
 
         // Close the scanner
         input.close();
