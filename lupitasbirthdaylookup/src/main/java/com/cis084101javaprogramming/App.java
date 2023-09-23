@@ -78,7 +78,6 @@ public class App {
         // Ends program if user hits enter without entering prompt
         if (inputtedName.length() < 1) {
             System.out.println("There are no birthdays in the file for that entry.");
-            // System.exit(0);
             return;
         }
 
