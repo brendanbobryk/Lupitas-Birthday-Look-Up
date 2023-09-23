@@ -9,7 +9,7 @@ import org.json.simple.parser.*;
  * Name: Brendan Bobryk
  * Student ID #: 1036738
  * Class: CIS 084 Java Programming
- * Date: 10/3/23
+ * Date: 9/22/23
  * Program: Lupita's Birthday Look Up
  */
 
@@ -44,10 +44,13 @@ public class App {
     public static void initializeMap(final String pathToFile) {
         JSONArray jsonData = readJSONArrayFile(pathToFile);
 
-        // Loop over list
+        // Declarations
         String birthday, name;
         JSONObject obj;
+
+        // Loop over list
         for (Integer i = 0; i < jsonData.size(); i++) {
+
             // Parse the object and pull out the name and birthday
             obj = (JSONObject) jsonData.get(i);
             birthday = (String) obj.get("birthday");
