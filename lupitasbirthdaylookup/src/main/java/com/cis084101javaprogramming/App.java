@@ -55,12 +55,6 @@ public class App {
 
             // Add the name and birthday in to a hashmap
             birthdayMap.put(name, birthday);
-
-            /**
-             * // Print the names and birthdays
-             * System.out.println("name = " + name);
-             * System.out.println("birthday = " + birthday);
-             */
         }
     }
 
