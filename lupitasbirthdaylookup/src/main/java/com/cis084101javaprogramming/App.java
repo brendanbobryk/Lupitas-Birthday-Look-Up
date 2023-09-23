@@ -75,11 +75,8 @@ public class App {
         System.out.print("Enter a name: ");
         String inputtedName = input.nextLine().toLowerCase();
 
-        int tempNameLength = inputtedName.length();
-        if (tempNameLength > 3) {
-            tempNameLength = 3;
-        }
-
+        // ******************************************** add comments
+        // ********************************************
         JSONArray jsonData = readJSONArrayFile(pathToFile);
         String name = "N/A", birthday;
         ArrayList<String> nameArrayList = new ArrayList<String>();
@@ -91,7 +88,7 @@ public class App {
             obj = (JSONObject) jsonData.get(i);
             name = (String) obj.get("name");
 
-            if (name.toLowerCase().contains(inputtedName.substring(0, tempNameLength))) {
+            if (name.toLowerCase().contains(inputtedName.substring(0, inputtedName.length()))) {
                 nameArrayList.add(name);
                 nameCount++;
             }
