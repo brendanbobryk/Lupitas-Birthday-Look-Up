@@ -96,6 +96,8 @@ public class App {
             }
         }
 
+        // Prints the result if no matches were found with the given input and closes
+        // the program
         if (nameMatchList.size() == 0) {
             System.out.println("No matches were found with the given input \"" + inputtedName + "\".");
             input.close();
