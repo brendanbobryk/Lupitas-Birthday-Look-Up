@@ -15,9 +15,6 @@ import org.json.simple.parser.*;
 
 public class App {
 
-    // This is a private and static hashmap to store the birthdays
-    private static HashMap<String, String> birthdayMap = new HashMap<String, String>();
-
     // Reads the JSON file
     public static JSONArray readJSONArrayFile(String fileName) {
         // JSON parser object to parse read file
@@ -41,7 +38,8 @@ public class App {
         return birthdayArr;
     }
 
-    public static void initializeMap(final String pathToFile) {
+    public static HashMap<String, String> initializeMap(final String pathToFile) {
+        HashMap<String, String> birthdayMap = new HashMap<String, String>();
         JSONArray jsonData = readJSONArrayFile(pathToFile);
 
         // Declarations
@@ -59,13 +57,15 @@ public class App {
             // Add the name and birthday in to a hashmap
             birthdayMap.put(name, birthday);
         }
+        return birthdayMap;
     }
 
     public static void main(final String[] args) {
-        String pathToFile = "C:\\Users\\Brendan\\Documents\\GitHub\\Lupitas-Birthday-Look-Up\\lupitasbirthdaylookup\\src\\main\\java\\com\\cis084101javaprogramming\\birthday.json";
-
+        String pathToFile = "./birthday.json";
         // Initializes the hash map
-        initializeMap(pathToFile);
+        // NOTE: Changed initializeMap function to explicitly return the hashMap for
+        // better visibility
+        HashMap<String, String> birthdayMap = initializeMap(pathToFile);
 
         // Prompt to read user's input from keyboard
         System.out.println("Reading user input into a string");
@@ -73,44 +73,45 @@ public class App {
         // Get user input
         Scanner input = new Scanner(System.in);
         System.out.print("Enter a name: ");
-        String inputtedName = input.nextLine().toLowerCase();
+        String inputtedName = input.nextLine();
 
         // Ends program if user hits enter without entering prompt
         if (inputtedName.length() < 1) {
-            System.out.println("There are no birthdays in the file for that entry.");
+            System.out.println("An input must be entered to reutrn a birthday.");
+            input.close();
             return;
         }
 
         // Declarations
-        JSONArray jsonData = readJSONArrayFile(pathToFile);
-        String name, birthday;
-        JSONObject obj;
+        String birthday;
         // Array List to store name matches
-        ArrayList<String> nameArrayList = new ArrayList<String>();
+        ArrayList<String> nameMatchList = new ArrayList<String>();
 
-        // Loop to traverse JSON file
-        int nameCount = 0;
-        for (Integer i = 0; i < jsonData.size(); i++) {
-
-            // Parse the object and pull out the name
-            obj = (JSONObject) jsonData.get(i);
-            name = (String) obj.get("name");
-
+        // Loop to traverse birthdayMap and gather all names that match the user's input
+        // They will be saved inside of an array list named nameMatchList
+        for (String nameOfPerson : birthdayMap.keySet()) {
             // Checks name to see if it matches input
-            if (name.toLowerCase().contains(inputtedName.substring(0, inputtedName.length()))) {
-                nameArrayList.add(name);
-                nameCount++;
+            if (nameOfPerson.toLowerCase().contains(inputtedName.toLowerCase())) {
+                nameMatchList.add(nameOfPerson);
             }
         }
 
-        // Loops through nameArrayList and prints the name and birthday for each person
+        if (nameMatchList.size() == 0) {
+            System.out.println("No matches were found with the given input \"" + inputtedName + "\".");
+            input.close();
+            return;
+        }
+
+        System.out.println("The search of " + inputtedName + " returned " + nameMatchList.size() + " results.");
+
+        // Loops through nameMatchList and prints the name and birthday for each person
         // found in the search
-        for (int i = 0; i < nameCount; i++) {
+        for (int i = 0; i < nameMatchList.size(); i++) {
             // Prints user's input
-            System.out.println("Name = " + nameArrayList.get(i));
+            System.out.println("Name = " + nameMatchList.get(i));
 
             // Prints the name's birthday
-            birthday = birthdayMap.get(nameArrayList.get(i));
+            birthday = birthdayMap.get(nameMatchList.get(i));
             System.out.println("Their birthday is: " + birthday);
         }
 
