@@ -77,7 +77,7 @@ public class App {
 
         // Ends program if user hits enter without entering prompt
         if (inputtedName.length() < 1) {
-            System.out.println("An input must be entered to reutrn a birthday.");
+            System.out.println("An input must be entered to return a birthday.");
             input.close();
             return;
         }
